@@ -1,4 +1,4 @@
-Tangible Gold by MrJack
+Tangible Gold by [MrJack](http://forums.bethsoft.com/user/781645-mrjack/)
 =============
 Latest version: 1.0.0
 
