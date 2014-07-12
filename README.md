@@ -1,4 +1,4 @@
-Tangible Gold
+Tangible Gold by MrJack
 =============
 Latest version: 1.0.0
 
