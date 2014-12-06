@@ -1,11 +1,16 @@
 Scriptname _MRJ_VisibleGoldAlias extends ReferenceAlias
 
+;1.0.0
 Actor Property PlayerRef Auto
 MiscObject Property Gold001 Auto
 MiscObject Property kFakeGold Auto
 Form kRealGold
-
 Float fGoldWeight = 0.0
+
+;1.0.1
+MiscObject Property kCoinPurseSmall Auto
+MiscObject Property kCoinPurseMedium Auto
+MiscObject Property kCoinPurseLarge Auto
 
 Event OnInit()
 	OnPlayerLoadGame()
@@ -54,7 +59,31 @@ Event OnMenuClose(string menuName)
 EndEvent
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
-	PlayerRef.DropObject(kRealGold, aiItemCount)
+	If(aiItemCount < 11)
+		Int i = 0
+		While(i < aiItemCount)
+			PlayerRef.DropObject(kRealGold, 1)
+			i += 1
+		EndWhile
+	Else
+		PlayerRef.RemoveItem(kRealGold, aiItemCount, True)
+		ObjectReference CoinPurse
+		If(aiItemCount < 25)
+			CoinPurse = PlayerRef.PlaceAtMe(kCoinPurseSmall)
+		ElseIf(aiItemCount < 50)
+			CoinPurse = PlayerRef.PlaceAtMe(kCoinPurseMedium)
+		Else
+			CoinPurse = PlayerRef.PlaceAtMe(kCoinPurseLarge)
+		EndIf
+		_MRJ_CoinPurse CoinPurseScript = CoinPurse as _MRJ_CoinPurse
+		CoinPurseScript.iGoldAmount = aiItemCount
+		Float fDistance = 120.0
+		Float fHeightMod = -35.0
+		Float fAngleZ = PlayerRef.GetAngleZ()
+		CoinPurse.MoveTo(PlayerRef, fDistance * Math.Sin(fAngleZ), fDistance * Math.Cos(fAngleZ), PlayerRef.GetHeight() + fHeightMod)
+		Utility.Wait(0.1)
+		CoinPurse.ApplyHavokImpulse(0.0, 0.0, -0.1, 0.1)
+	EndIf
 	PlayerRef.AddItem(kRealGold, 1, True)
 	PlayerRef.RemoveItem(kRealGold, 1, True)
 EndEvent

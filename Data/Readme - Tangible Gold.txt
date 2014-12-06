@@ -1,5 +1,5 @@
 Tangible Gold
-Version: 1.0.0
+Version: 1.1.0
 Author: MrJack
 
 Table of contents
@@ -57,5 +57,7 @@ PM MrJack on the official Bethesda forums or mrpwn on Nexus.
 
 
 --Changelog--
+1.1.0:
+	- Added the ability to drop stacks of gold as a coin purse. Dropping more than 10 coins at once leads to a coin purse being dropped.
 1.0.0:
 	- Initial release.
